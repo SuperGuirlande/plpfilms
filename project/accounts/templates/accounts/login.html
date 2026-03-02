@@ -1,0 +1,107 @@
+{% load tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion — PLP Films</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    {% tailwind_css %}
+</head>
+<body class="bg-noir-profond font-texte overflow-hidden">
+
+<div class="min-h-screen flex">
+
+    <!-- ── COLONNE GAUCHE — image décorative ── -->
+    <div class="hidden lg:block lg:w-1/2 relative overflow-hidden">
+        <img src="{% static 'images/global/pagecontact_panasonic-lumix (1).jpg' %}"
+             alt=""
+             class="absolute inset-0 w-full h-full object-cover grayscale">
+        <div class="absolute inset-0 bg-gradient-to-r from-noir-profond/20 to-noir-profond/80"></div>
+
+        <!-- Branding overlay -->
+        <div class="absolute bottom-12 left-12">
+            <img src="{% static 'images/global/LOGO PLP PNG (1).png' %}"
+                 alt="PLP Films"
+                 class="h-16 w-auto invert drop-shadow-[0_0_16px_rgba(255,255,255,0.75)] mb-6">
+            <p class="font-sous-titre text-xs tracking-[4px] uppercase text-blanc-casse/50">
+                Espace Administrateur
+            </p>
+        </div>
+    </div>
+
+    <!-- ── COLONNE DROITE — formulaire ── -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center px-8 py-16 bg-noir-profond">
+        <div class="w-full max-w-[400px]">
+
+            <!-- Logo mobile -->
+            <div class="lg:hidden mb-10 text-center">
+                <img src="{% static 'images/global/LOGO PLP PNG (1).png' %}"
+                     alt="PLP Films"
+                     class="h-12 w-auto invert drop-shadow-[0_0_16px_rgba(255,255,255,0.75)] mx-auto mb-3">
+            </div>
+
+            <!-- En-tête -->
+            <div class="mb-10">
+                <p class="font-sous-titre text-xs tracking-[4px] uppercase text-or mb-3">Espace Administrateur</p>
+                <h1 class="font-titre text-[3.5rem] leading-none tracking-[3px] text-white">SE CONNECTER</h1>
+                <div class="w-12 h-[2px] bg-or mt-4"></div>
+            </div>
+
+            <!-- Messages d'erreur -->
+            {% if form.errors %}
+            <div class="mb-6 px-4 py-3 border-l-4 border-red-500 bg-red-500/10">
+                <p class="font-texte text-sm text-red-400">
+                    Identifiants incorrects. Veuillez réessayer.
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- Formulaire -->
+            <form method="post" class="flex flex-col gap-6">
+                {% csrf_token %}
+
+                <!-- Email -->
+                <div>
+                    <label for="{{ form.username.id_for_label }}"
+                           class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">
+                        Adresse e-mail
+                    </label>
+                    {{ form.username }}
+                </div>
+
+                <!-- Mot de passe -->
+                <div>
+                    <label for="{{ form.password.id_for_label }}"
+                           class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">
+                        Mot de passe
+                    </label>
+                    {{ form.password }}
+                </div>
+
+                <!-- Bouton -->
+                <button type="submit"
+                        class="w-full py-4 bg-or text-noir-profond font-sous-titre text-sm tracking-[3px] uppercase transition-all duration-300 hover:bg-or-clair hover:shadow-[0_8px_30px_rgba(212,175,55,0.4)] mt-2">
+                    Connexion
+                </button>
+            </form>
+
+            <!-- Mot de passe oublié -->
+            <p class="mt-8 font-texte text-sm text-blanc-casse/40 text-center">
+                Mot de passe perdu ?
+                <a href="{% url 'accounts:password_reset' %}"
+                   class="text-or/70 hover:text-or transition-colors duration-200 ml-1">
+                    Réinitialiser →
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

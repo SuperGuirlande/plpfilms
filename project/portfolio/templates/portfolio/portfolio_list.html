@@ -1,0 +1,98 @@
+{% extends 'main/components/base.html' %}
+{% load static %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+
+<!-- ── Hero ── -->
+<section class="pt-28 md:pt-40 pb-10 md:pb-16 px-5 sm:px-8 md:px-12 lg:px-16 bg-noir-profond">
+    <div class="max-w-[1400px] mx-auto">
+        <p class="font-sous-titre text-xs tracking-[5px] uppercase text-or mb-3 md:mb-4">PLP Films</p>
+        <h1 class="font-titre text-[3rem] sm:text-[4.5rem] md:text-[6rem] leading-none tracking-[4px] md:tracking-[6px] text-white mb-5 md:mb-6">PORTFOLIO</h1>
+        <div class="w-16 h-[2px] bg-or"></div>
+    </div>
+</section>
+
+<!-- ── Filtres ── -->
+{% if categories %}
+<section class="px-5 sm:px-8 md:px-12 lg:px-16 py-4 md:py-6 bg-noir-profond border-b border-gris-fonce sticky top-0 z-40 backdrop-blur overflow-x-auto">
+    <div class="max-w-[1400px] mx-auto flex items-center gap-2 md:gap-3 flex-nowrap md:flex-wrap min-w-max md:min-w-0">
+        <a href="{% url 'main:portfolio_list' %}"
+           class="font-sous-titre text-xs tracking-[2px] uppercase px-3 md:px-4 py-2 transition-all duration-200 whitespace-nowrap
+                  {% if not active_category %}bg-or text-noir-profond{% else %}border border-gris-fonce text-blanc-casse/50 hover:border-or hover:text-or{% endif %}">
+            Tous
+        </a>
+        {% for cat in categories %}
+        <a href="{% url 'main:portfolio_list' %}?categorie={{ cat.slug }}"
+           class="font-sous-titre text-xs tracking-[2px] uppercase px-3 md:px-4 py-2 transition-all duration-200 whitespace-nowrap
+                  {% if active_category.slug == cat.slug %}bg-or text-noir-profond{% else %}border border-gris-fonce text-blanc-casse/50 hover:border-or hover:text-or{% endif %}">
+            {{ cat.name }}
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- ── Grille ── -->
+<section class="py-10 md:py-16 px-5 sm:px-8 md:px-12 lg:px-16 bg-noir-profond min-h-screen">
+    <div class="max-w-[1400px] mx-auto">
+
+        {% if entries %}
+        <p class="font-texte text-xs text-blanc-casse/30 mb-6 md:mb-8">
+            {{ entries|length }} projet{% if entries|length != 1 %}s{% endif %}
+            {% if active_category %}· {{ active_category.name }}{% endif %}
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+            {% for entry in entries %}
+            <a href="{% url 'main:portfolio_detail' entry.slug %}"
+               class="group relative bg-gris-fonce overflow-hidden block">
+                <div class="relative h-[220px] md:h-[260px] overflow-hidden">
+                    {% if entry.thumbnail %}
+                    <img src="{{ entry.thumbnail.url }}" alt="{{ entry.title }}"
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                    {% else %}
+                    <div class="w-full h-full bg-noir-doux flex items-center justify-center">
+                        <span class="font-titre text-[2.5rem] tracking-[4px] text-blanc-casse/10">PLP</span>
+                    </div>
+                    {% endif %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-noir-profond/80 via-transparent to-transparent"></div>
+                    {% if entry.category %}
+                    <span class="absolute top-3 left-3 font-sous-titre text-[10px] tracking-[2px] uppercase px-3 py-1 bg-noir-profond/80 text-or border border-or/30">
+                        {{ entry.category.name }}
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="p-5 md:p-6 border-t border-gris-fonce group-hover:border-or/30 transition-colors duration-300">
+                    <h2 class="font-sous-titre text-sm md:text-base tracking-[1px] uppercase text-blanc-casse group-hover:text-or transition-colors duration-300 mb-2">
+                        {{ entry.title }}
+                    </h2>
+                    <p class="font-texte text-sm text-blanc-casse/50 leading-relaxed line-clamp-2">{{ entry.short_description }}</p>
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="font-texte text-xs text-blanc-casse/25">{{ entry.created_at|date:"Y" }}</span>
+                        <span class="font-sous-titre text-xs tracking-[1px] uppercase text-or/0 group-hover:text-or transition-all duration-300">Voir →</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <div class="py-24 text-center">
+            <p class="font-titre text-[2.5rem] tracking-[6px] text-blanc-casse/10 mb-4">VIDE</p>
+            <p class="font-texte text-sm text-blanc-casse/30">
+                {% if active_category %}
+                    Aucun projet dans la catégorie « {{ active_category.name }} ».
+                    <a href="{% url 'main:portfolio_list' %}" class="text-or hover:text-or-clair ml-1">Voir tout →</a>
+                {% else %}
+                    Aucun projet publié pour le moment.
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

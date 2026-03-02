@@ -1,0 +1,143 @@
+{% extends 'accounts/admin/admin_base.html' %}
+
+{% block admin_title %}Tableau de bord{% endblock %}
+{% block page_title %}Tableau de bord{% endblock %}
+
+{% block admin_content %}
+
+<!-- Stats cards -->
+<div class="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-10">
+
+    <div class="bg-noir-profond border border-gris-fonce p-6 flex flex-col gap-3">
+        <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-blanc-casse/40">Entrées portfolio</p>
+        <p class="font-titre text-[3rem] leading-none text-white">{{ stats.total_entries }}</p>
+        <p class="font-texte text-xs text-blanc-casse/30">dont
+            <span class="text-or">{{ stats.published_entries }}</span> publiées
+        </p>
+    </div>
+
+    <div class="bg-noir-profond border border-gris-fonce p-6 flex flex-col gap-3">
+        <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-blanc-casse/40">Catégories</p>
+        <p class="font-titre text-[3rem] leading-none text-white">{{ stats.total_categories }}</p>
+        <p class="font-texte text-xs text-blanc-casse/30">types de projets</p>
+    </div>
+
+    <div class="bg-noir-profond border border-gris-fonce p-6 flex flex-col gap-3">
+        <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-blanc-casse/40">Vidéos</p>
+        <p class="font-titre text-[3rem] leading-none text-white">{{ stats.total_videos }}</p>
+        <p class="font-texte text-xs text-blanc-casse/30">fichiers & liens YouTube</p>
+    </div>
+
+    <div class="bg-noir-profond border border-gris-fonce p-6 flex flex-col gap-3">
+        <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-blanc-casse/40">Messages non lus</p>
+        <p class="font-titre text-[3rem] leading-none {% if stats.unread_messages %}text-or{% else %}text-white{% endif %}">{{ stats.unread_messages }}</p>
+        <a href="{% url 'accounts:contact_messages' %}" class="font-texte text-xs text-blanc-casse/30 hover:text-or transition-colors duration-200">Voir les messages →</a>
+    </div>
+
+</div>
+
+<!-- Actions rapides -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+    <!-- Portfolio -->
+    <div class="bg-noir-profond border border-gris-fonce p-6">
+        <div class="flex items-center justify-between mb-5">
+            <div>
+                <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-1">Portfolio</p>
+                <h2 class="font-titre text-2xl tracking-[2px] text-white">Dernières entrées</h2>
+            </div>
+            <a href="{% url 'portfolio:admin_entry_create' %}"
+               class="flex items-center gap-2 font-sous-titre text-xs tracking-[1px] uppercase px-4 py-2.5 border border-or text-or hover:bg-or hover:text-noir-profond transition-all duration-200">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Nouvelle entrée
+            </a>
+        </div>
+
+        {% if recent_entries %}
+        <ul class="flex flex-col divide-y divide-gris-fonce">
+            {% for entry in recent_entries %}
+            <li class="flex items-center gap-4 py-3">
+                {% if entry.thumbnail %}
+                <img src="{{ entry.thumbnail.url }}" alt=""
+                     class="w-14 h-10 object-cover flex-shrink-0 grayscale">
+                {% else %}
+                <div class="w-14 h-10 bg-gris-fonce flex-shrink-0"></div>
+                {% endif %}
+                <div class="flex-1 min-w-0">
+                    <p class="font-sous-titre text-xs tracking-[1px] uppercase text-blanc-casse truncate">{{ entry.title }}</p>
+                    <p class="font-texte text-[11px] text-blanc-casse/40 mt-0.5">
+                        {{ entry.category.name|default:"Sans catégorie" }} · {{ entry.created_at|date:"d/m/Y" }}
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    {% if entry.is_published %}
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                    {% else %}
+                    <span class="w-1.5 h-1.5 rounded-full bg-blanc-casse/20"></span>
+                    {% endif %}
+                    <a href="{% url 'portfolio:admin_entry_edit' entry.pk %}"
+                       class="font-sous-titre text-[10px] tracking-[1px] uppercase text-blanc-casse/40 hover:text-or transition-colors duration-200">
+                        Modifier
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'portfolio:admin_entry_list' %}"
+           class="block mt-4 font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 hover:text-or transition-colors duration-200 text-right">
+            Voir tout →
+        </a>
+        {% else %}
+        <p class="font-texte text-sm text-blanc-casse/30 py-4 text-center">
+            Aucune entrée pour le moment.
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Compte & Infos -->
+    <div class="bg-noir-profond border border-gris-fonce p-6">
+        <div class="mb-5">
+            <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-1">Compte</p>
+            <h2 class="font-titre text-2xl tracking-[2px] text-white">Mon compte</h2>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-4 py-3 border-b border-gris-fonce">
+                <div class="w-10 h-10 bg-or/10 border border-or/30 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-or" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-sous-titre text-xs tracking-[1px] uppercase text-blanc-casse">{{ request.user.username }}</p>
+                    <p class="font-texte text-xs text-blanc-casse/40">{{ request.user.email }}</p>
+                </div>
+            </div>
+
+            <a href="{% url 'accounts:change_password' %}"
+               class="flex items-center justify-between py-3 border-b border-gris-fonce group">
+                <span class="font-sous-titre text-xs tracking-[1px] uppercase text-blanc-casse/50 group-hover:text-blanc-casse transition-colors duration-200">
+                    Changer le mot de passe
+                </span>
+                <svg class="w-4 h-4 text-blanc-casse/30 group-hover:text-or transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+
+            <a href="{% url 'accounts:logout' %}"
+               class="flex items-center justify-between py-3 group">
+                <span class="font-sous-titre text-xs tracking-[1px] uppercase text-red-500/50 group-hover:text-red-400 transition-colors duration-200">
+                    Se déconnecter
+                </span>
+                <svg class="w-4 h-4 text-red-500/30 group-hover:text-red-400 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

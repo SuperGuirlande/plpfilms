@@ -1,0 +1,57 @@
+{% load tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block admin_title %}Admin{% endblock %} — PLP Films</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    {% tailwind_css %}
+    {% block admin_head %}{% endblock %}
+</head>
+<body class="bg-noir-doux font-texte text-blanc-casse overflow-x-hidden">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar fixe -->
+    {% include 'accounts/admin/sidebar.html' %}
+
+    <!-- Contenu principal (décalé de la largeur de la sidebar) -->
+    <main class="ml-64 flex-1 min-h-screen flex flex-col">
+
+        <!-- Topbar -->
+        <header class="sticky top-0 z-40 bg-noir-doux/95 backdrop-blur border-b border-gris-fonce px-8 py-4 flex items-center justify-between">
+            <div>
+                <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-blanc-casse/30">
+                    PLP Films · Espace Administrateur
+                </p>
+                <h1 class="font-titre text-[1.6rem] tracking-[2px] text-white leading-none mt-0.5">
+                    {% block page_title %}Dashboard{% endblock %}
+                </h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="{% url 'main:home' %}"
+                   target="_blank"
+                   class="flex items-center gap-2 font-sous-titre text-xs tracking-[1px] uppercase text-blanc-casse/40 hover:text-or transition-colors duration-200 border border-gris-fonce px-4 py-2">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                    Voir le site
+                </a>
+            </div>
+        </header>
+
+        <!-- Zone de contenu -->
+        <div class="flex-1 p-8">
+            {% block admin_content %}{% endblock %}
+        </div>
+
+    </main>
+</div>
+
+{% block admin_scripts %}{% endblock %}
+</body>
+</html>

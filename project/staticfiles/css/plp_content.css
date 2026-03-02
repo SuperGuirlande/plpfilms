@@ -1,0 +1,238 @@
+/* ═══════════════════════════════════════════════════════════════
+   PLP FILMS — Styles du contenu riche
+   Appliqué dans :
+     - L'éditeur CKEditor 5 (.ck-content dans l'admin)
+     - Les pages publiques du portfolio (div.ck-content)
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ── Variables ── */
+:root {
+    --plp-noir-profond : #0A0A0A;
+    --plp-noir-doux    : #1A1A1A;
+    --plp-gris-fonce   : #2A2A2A;
+    --plp-blanc-casse  : #F5F5F5;
+    --plp-or           : #D4AF37;
+    --plp-or-clair     : #E6C96E;
+
+    --plp-font-titre     : 'Bebas Neue', sans-serif;
+    --plp-font-sous-titre: 'Oswald', sans-serif;
+    --plp-font-texte     : 'Inter', sans-serif;
+}
+
+/* ── Base ── */
+.ck-content {
+    font-family : var(--plp-font-texte);
+    font-size   : 1rem;
+    line-height : 1.9;
+    color       : var(--plp-blanc-casse);
+    background  : transparent;
+}
+
+/* ── Titres ── */
+.ck-content h2 {
+    font-family    : var(--plp-font-titre);
+    font-size      : 3.5rem;
+    letter-spacing : 6px;
+    line-height    : 1;
+    color          : #ffffff;
+    margin         : 3rem 0 1.2rem;
+    text-transform : uppercase;
+}
+
+.ck-content h3 {
+    font-family    : var(--plp-font-sous-titre);
+    font-size      : 1.4rem;
+    font-weight    : 600;
+    letter-spacing : 3px;
+    text-transform : uppercase;
+    color          : var(--plp-or);
+    margin         : 2.5rem 0 0.8rem;
+}
+
+.ck-content h4 {
+    font-family    : var(--plp-font-sous-titre);
+    font-size      : 1rem;
+    font-weight    : 600;
+    letter-spacing : 2px;
+    text-transform : uppercase;
+    color          : rgba(245, 245, 245, 0.6);
+    margin         : 2rem 0 0.6rem;
+}
+
+/* ── Paragraphes ── */
+.ck-content p {
+    margin      : 0 0 1.4rem;
+    font-weight : 300;
+    line-height : 1.9;
+    color       : rgba(245, 245, 245, 0.8);
+}
+
+/* ── Liens ── */
+.ck-content a {
+    color           : var(--plp-or);
+    text-decoration : none;
+    border-bottom   : 1px solid rgba(212, 175, 55, 0.35);
+    transition      : border-color 0.2s, color 0.2s;
+}
+
+.ck-content a:hover {
+    color        : var(--plp-or-clair);
+    border-color : var(--plp-or-clair);
+}
+
+/* ── Listes ── */
+.ck-content ul,
+.ck-content ol {
+    margin      : 0 0 1.4rem 1.6rem;
+    color       : rgba(245, 245, 245, 0.8);
+    font-weight : 300;
+}
+
+.ck-content li {
+    margin-bottom : 0.45rem;
+    line-height   : 1.8;
+}
+
+.ck-content ul li::marker {
+    color : var(--plp-or);
+}
+
+.ck-content ol li::marker {
+    color       : var(--plp-or);
+    font-family : var(--plp-font-sous-titre);
+    font-weight : 600;
+}
+
+/* ── Citation (blockquote) ── */
+.ck-content blockquote {
+    border-left  : 4px solid var(--plp-or);
+    padding      : 1.2rem 2rem;
+    margin       : 2.5rem 0;
+    background   : var(--plp-gris-fonce);
+    font-style   : italic;
+    font-size    : 1.05rem;
+    color        : rgba(245, 245, 245, 0.7);
+    position     : relative;
+}
+
+/* ── Code inline ── */
+.ck-content code {
+    font-family      : 'Courier New', Courier, monospace;
+    background       : var(--plp-gris-fonce);
+    color            : var(--plp-or);
+    padding          : 0.15rem 0.5rem;
+    font-size        : 0.88em;
+    border           : 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* ── Bloc de code ── */
+.ck-content pre {
+    background    : var(--plp-noir-profond);
+    border-left   : 4px solid var(--plp-or);
+    padding       : 1.5rem 2rem;
+    margin        : 2rem 0;
+    overflow-x    : auto;
+    border-radius : 0;
+}
+
+.ck-content pre code {
+    background  : none;
+    border      : none;
+    padding     : 0;
+    color       : var(--plp-blanc-casse);
+    font-size   : 0.9rem;
+    line-height : 1.7;
+}
+
+/* ── Images ── */
+.ck-content img {
+    max-width : 100%;
+    height    : auto;
+    display   : block;
+}
+
+.ck-content figure {
+    margin : 2.5rem 0;
+}
+
+.ck-content figcaption {
+    font-family : var(--plp-font-texte);
+    font-size   : 0.8rem;
+    color       : rgba(245, 245, 245, 0.35);
+    text-align  : center;
+    margin-top  : 0.6rem;
+    letter-spacing : 1px;
+}
+
+/* ── Tableau ── */
+.ck-content table {
+    width           : 100%;
+    border-collapse : collapse;
+    margin          : 2.5rem 0;
+    font-size       : 0.9rem;
+}
+
+.ck-content th {
+    font-family    : var(--plp-font-sous-titre);
+    font-weight    : 600;
+    font-size      : 0.8rem;
+    letter-spacing : 2px;
+    text-transform : uppercase;
+    color          : var(--plp-or);
+    border-bottom  : 2px solid var(--plp-or);
+    padding        : 0.75rem 1rem;
+    text-align     : left;
+}
+
+.ck-content td {
+    padding       : 0.75rem 1rem;
+    border-bottom : 1px solid var(--plp-gris-fonce);
+    color         : rgba(245, 245, 245, 0.7);
+    vertical-align: top;
+}
+
+.ck-content tr:hover td {
+    background : rgba(255, 255, 255, 0.02);
+}
+
+/* ── Séparateur ── */
+.ck-content hr {
+    border     : none;
+    border-top : 1px solid var(--plp-gris-fonce);
+    margin     : 3.5rem 0;
+    position   : relative;
+}
+
+/* ── Mise en forme inline ── */
+.ck-content strong {
+    color       : #ffffff;
+    font-weight : 600;
+}
+
+.ck-content em {
+    color      : var(--plp-or-clair);
+    font-style : italic;
+}
+
+.ck-content mark {
+    background : rgba(212, 175, 55, 0.25);
+    color      : var(--plp-or-clair);
+    padding    : 0 0.2rem;
+}
+
+/* ── Styles spécifiques à l'éditeur ── */
+.ck.ck-content {
+    min-height  : 400px;
+    padding     : 2rem;
+    background  : var(--plp-noir-doux) !important;
+    color       : var(--plp-blanc-casse);
+    caret-color : var(--plp-or);
+}
+
+/* Curseur de sélection doré dans l'éditeur */
+.ck-content ::selection {
+    background : rgba(212, 175, 55, 0.25);
+    color      : #ffffff;
+}

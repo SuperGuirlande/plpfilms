@@ -1,0 +1,128 @@
+{% load static %}
+<nav class="fixed top-0 left-0 right-0 z-[1000] px-5 sm:px-8 md:px-16 py-5 md:py-8 flex justify-between items-center bg-gradient-to-b from-noir-profond/95 to-transparent">
+
+    <!-- Logo -->
+    <a href="{% url 'main:home' %}">
+        <img src="{% static 'images/global/LOGO PLP PNG (1).png' %}"
+             alt="PLP Films"
+             class="h-10 md:h-14 w-auto invert drop-shadow-[0_0_16px_rgba(255,255,255,0.75)]">
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex gap-10 lg:gap-12 list-none">
+        <li>
+            <a href="{% url 'main:home' %}#accueil"
+               class="relative font-sous-titre text-[0.95rem] tracking-[1px] uppercase text-blanc-casse hover:text-or transition-colors duration-300 group">
+                Accueil
+                <span class="absolute -bottom-[5px] left-0 h-[2px] w-0 bg-or group-hover:w-full transition-all duration-300"></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'main:portfolio_list' %}"
+               class="relative font-sous-titre text-[0.95rem] tracking-[1px] uppercase text-blanc-casse hover:text-or transition-colors duration-300 group">
+                Portfolio
+                <span class="absolute -bottom-[5px] left-0 h-[2px] w-0 bg-or group-hover:w-full transition-all duration-300"></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'main:blog_list' %}"
+               class="relative font-sous-titre text-[0.95rem] tracking-[1px] uppercase text-blanc-casse hover:text-or transition-colors duration-300 group">
+                Blog
+                <span class="absolute -bottom-[5px] left-0 h-[2px] w-0 bg-or group-hover:w-full transition-all duration-300"></span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'main:home' %}#contact"
+               class="relative font-sous-titre text-[0.95rem] tracking-[1px] uppercase text-blanc-casse hover:text-or transition-colors duration-300 group">
+                Contact
+                <span class="absolute -bottom-[5px] left-0 h-[2px] w-0 bg-or group-hover:w-full transition-all duration-300"></span>
+            </a>
+        </li>
+    </ul>
+
+    <!-- Bouton toggle hamburger / croix (mobile uniquement) -->
+    <button id="nav-toggle"
+            class="md:hidden relative w-8 h-8 flex items-center justify-center"
+            aria-label="Menu">
+        <!-- Hamburger -->
+        <span id="icon-open" class="absolute flex flex-col gap-1.5 transition-all duration-300">
+            <span class="block w-6 h-[2px] bg-blanc-casse"></span>
+            <span class="block w-6 h-[2px] bg-blanc-casse"></span>
+            <span class="block w-4 h-[2px] bg-blanc-casse self-end"></span>
+        </span>
+        <!-- Croix -->
+        <span id="icon-close" class="absolute opacity-0 scale-75 transition-all duration-300">
+            <svg class="w-6 h-6 text-blanc-casse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </span>
+    </button>
+</nav>
+
+<!-- ── Menu mobile overlay ── -->
+<div id="mobile-menu"
+     class="fixed inset-0 z-[999] bg-noir-profond/98 backdrop-blur flex flex-col items-center justify-center translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+
+    <ul class="flex flex-col items-center gap-8 list-none">
+        <li>
+            <a href="{% url 'main:home' %}#accueil"
+               class="mobile-link font-titre text-[2.5rem] tracking-[4px] text-blanc-casse hover:text-or transition-colors duration-300">
+                Accueil
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'main:portfolio_list' %}"
+               class="mobile-link font-titre text-[2.5rem] tracking-[4px] text-blanc-casse hover:text-or transition-colors duration-300">
+                Portfolio
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'main:blog_list' %}"
+               class="mobile-link font-titre text-[2.5rem] tracking-[4px] text-blanc-casse hover:text-or transition-colors duration-300">
+                Blog
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'main:home' %}#contact"
+               class="mobile-link font-titre text-[2.5rem] tracking-[4px] text-blanc-casse hover:text-or transition-colors duration-300">
+                Contact
+            </a>
+        </li>
+    </ul>
+
+    <div class="absolute bottom-10 font-texte text-xs text-blanc-casse/20 tracking-[2px]">
+        pierrick.lafond@yahoo.fr
+    </div>
+</div>
+
+<script>
+(function () {
+    const toggle   = document.getElementById('nav-toggle');
+    const menu     = document.getElementById('mobile-menu');
+    const iconOpen  = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    const links    = menu.querySelectorAll('.mobile-link');
+    let isOpen     = false;
+
+    function open() {
+        isOpen = true;
+        menu.classList.remove('translate-x-full');
+        document.body.style.overflow = 'hidden';
+        // Hamburger → croix
+        iconOpen.classList.add('opacity-0', 'scale-75');
+        iconClose.classList.remove('opacity-0', 'scale-75');
+    }
+
+    function shut() {
+        isOpen = false;
+        menu.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+        // Croix → hamburger
+        iconOpen.classList.remove('opacity-0', 'scale-75');
+        iconClose.classList.add('opacity-0', 'scale-75');
+    }
+
+    toggle.addEventListener('click', () => isOpen ? shut() : open());
+    links.forEach(l => l.addEventListener('click', shut));
+})();
+</script>

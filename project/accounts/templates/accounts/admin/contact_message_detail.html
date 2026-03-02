@@ -1,0 +1,94 @@
+{% extends 'accounts/admin/admin_base.html' %}
+
+{% block admin_title %}Message de {{ msg.first_name }} {{ msg.last_name }}{% endblock %}
+{% block page_title %}Message de contact{% endblock %}
+
+{% block admin_content %}
+
+{% if confirm_delete %}
+<!-- ── Confirmation suppression ── -->
+<div class="max-w-[480px]">
+    <div class="bg-noir-profond border border-red-500/30 p-8">
+        <div class="flex items-start gap-4 mb-6">
+            <div class="w-10 h-10 bg-red-500/10 border border-red-500/30 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <div>
+                <h2 class="font-titre text-xl tracking-[2px] text-white mb-2">SUPPRIMER CE MESSAGE ?</h2>
+                <p class="font-texte text-sm text-blanc-casse/60">De : <strong class="text-blanc-casse">{{ msg.first_name }} {{ msg.last_name }}</strong></p>
+                <p class="font-texte text-xs text-red-400/70 mt-2">Cette action est irréversible.</p>
+            </div>
+        </div>
+        <form method="POST" class="flex items-center gap-4">
+            {% csrf_token %}
+            <button type="submit" class="px-8 py-3 bg-red-600 text-white font-sous-titre text-xs tracking-[2px] uppercase hover:bg-red-500 transition-all duration-200">Supprimer</button>
+            <a href="{% url 'accounts:contact_message_detail' msg.pk %}" class="px-6 py-3 border border-gris-fonce font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/40 hover:text-blanc-casse transition-all duration-200">Annuler</a>
+        </form>
+    </div>
+</div>
+
+{% else %}
+<!-- ── Détail du message ── -->
+<div class="max-w-[700px] flex flex-col gap-6">
+
+    <!-- Retour -->
+    <a href="{% url 'accounts:contact_messages' %}"
+       class="flex items-center gap-2 font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/30 hover:text-or transition-colors duration-200 w-fit">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
+        </svg>
+        Retour aux messages
+    </a>
+
+    <!-- Carte expéditeur -->
+    <div class="bg-noir-profond border border-gris-fonce p-6">
+        <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-4">Expéditeur</p>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <p class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 mb-1">Nom complet</p>
+                <p class="font-sous-titre text-sm tracking-[1px] uppercase text-blanc-casse">{{ msg.first_name }} {{ msg.last_name }}</p>
+            </div>
+            <div>
+                <p class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 mb-1">Date de réception</p>
+                <p class="font-texte text-sm text-blanc-casse/70">{{ msg.created_at|date:"d F Y à H\hi" }}</p>
+            </div>
+            <div>
+                <p class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 mb-1">Email</p>
+                <a href="mailto:{{ msg.email }}" class="font-texte text-sm text-or hover:text-or-clair transition-colors duration-200">{{ msg.email }}</a>
+            </div>
+            {% if msg.phone %}
+            <div>
+                <p class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 mb-1">Téléphone</p>
+                <a href="tel:{{ msg.phone }}" class="font-texte text-sm text-or hover:text-or-clair transition-colors duration-200">{{ msg.phone }}</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Message -->
+    <div class="bg-noir-profond border border-gris-fonce p-6">
+        <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-4">Message</p>
+        <p class="font-texte text-sm text-blanc-casse/80 leading-[1.9] whitespace-pre-wrap">{{ msg.message }}</p>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-4">
+        <a href="mailto:{{ msg.email }}?subject=Re: votre message — PLP Films"
+           class="flex items-center gap-2 px-8 py-3 bg-or text-noir-profond font-sous-titre text-xs tracking-[2px] uppercase hover:bg-or-clair transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            Répondre par email
+        </a>
+        <a href="{% url 'accounts:contact_message_delete' msg.pk %}"
+           class="px-6 py-3 border border-red-500/30 font-sous-titre text-xs tracking-[2px] uppercase text-red-500/50 hover:text-red-400 hover:border-red-400 transition-all duration-200">
+            Supprimer
+        </a>
+    </div>
+
+</div>
+{% endif %}
+
+{% endblock %}

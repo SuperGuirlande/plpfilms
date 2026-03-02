@@ -1,0 +1,113 @@
+{% extends 'accounts/admin/admin_base.html' %}
+
+{% block admin_title %}Portfolio — Entrées{% endblock %}
+{% block page_title %}Entrées portfolio{% endblock %}
+
+{% block admin_content %}
+
+<!-- Topbar actions -->
+<div class="flex items-center justify-between mb-6">
+    <p class="font-texte text-sm text-blanc-casse/40">
+        {{ entries|length }} entrée{% if entries|length != 1 %}s{% endif %}
+    </p>
+    <a href="{% url 'portfolio:admin_entry_create' %}"
+       class="flex items-center gap-2 font-sous-titre text-xs tracking-[1px] uppercase px-5 py-3 bg-or text-noir-profond hover:bg-or-clair transition-all duration-200">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Nouvelle entrée
+    </a>
+</div>
+
+<!-- Messages -->
+{% if messages %}
+{% for message in messages %}
+<div class="mb-4 px-4 py-3 border-l-4
+    {% if message.tags == 'success' %}border-green-500 bg-green-500/10 text-green-400{% else %}border-red-500 bg-red-500/10 text-red-400{% endif %}
+    font-texte text-sm">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if entries %}
+<div class="bg-noir-profond border border-gris-fonce overflow-hidden">
+
+    <!-- En-tête tableau -->
+    <div class="grid grid-cols-[64px_1fr_160px_120px_100px_120px] gap-4 px-5 py-3 border-b border-gris-fonce">
+        <span class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30"></span>
+        <span class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30">Titre</span>
+        <span class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30">Catégorie</span>
+        <span class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30">Vidéos</span>
+        <span class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30">Statut</span>
+        <span class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 text-right">Actions</span>
+    </div>
+
+    <!-- Lignes -->
+    {% for entry in entries %}
+    <div class="grid grid-cols-[64px_1fr_160px_120px_100px_120px] gap-4 px-5 py-4 border-b border-gris-fonce/50 items-center hover:bg-white/[0.02] transition-colors duration-150">
+
+        <!-- Miniature -->
+        {% if entry.thumbnail %}
+        <img src="{{ entry.thumbnail.url }}" alt=""
+             class="w-16 h-10 object-cover grayscale">
+        {% else %}
+        <div class="w-16 h-10 bg-gris-fonce"></div>
+        {% endif %}
+
+        <!-- Titre + description -->
+        <div class="min-w-0">
+            <p class="font-sous-titre text-xs tracking-[1px] uppercase text-blanc-casse truncate">{{ entry.title }}</p>
+            <p class="font-texte text-[11px] text-blanc-casse/30 truncate mt-0.5">{{ entry.short_description }}</p>
+        </div>
+
+        <!-- Catégorie -->
+        <span class="font-texte text-xs text-blanc-casse/50 truncate">
+            {{ entry.category.name|default:"—" }}
+        </span>
+
+        <!-- Vidéos -->
+        <span class="font-texte text-xs text-blanc-casse/50">
+            {{ entry.videos.count }} vidéo{% if entry.videos.count != 1 %}s{% endif %}
+        </span>
+
+        <!-- Statut -->
+        {% if entry.is_published %}
+        <span class="inline-flex items-center gap-1.5 font-sous-titre text-[10px] tracking-[1px] uppercase text-green-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>Publié
+        </span>
+        {% else %}
+        <span class="inline-flex items-center gap-1.5 font-sous-titre text-[10px] tracking-[1px] uppercase text-blanc-casse/30">
+            <span class="w-1.5 h-1.5 rounded-full bg-gris-fonce"></span>Masqué
+        </span>
+        {% endif %}
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3 justify-end">
+            <a href="{% url 'portfolio:admin_entry_edit' entry.pk %}"
+               class="font-sous-titre text-[10px] tracking-[1px] uppercase text-blanc-casse/40 hover:text-or transition-colors duration-200">
+                Modifier
+            </a>
+            <a href="{% url 'portfolio:admin_entry_delete' entry.pk %}"
+               class="font-sous-titre text-[10px] tracking-[1px] uppercase text-red-500/40 hover:text-red-400 transition-colors duration-200">
+                Suppr.
+            </a>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% else %}
+<div class="bg-noir-profond border border-gris-fonce p-16 text-center">
+    <p class="font-titre text-[2.5rem] tracking-[4px] text-blanc-casse/10 mb-4">VIDE</p>
+    <p class="font-texte text-sm text-blanc-casse/30 mb-6">Aucune entrée dans le portfolio.</p>
+    <a href="{% url 'portfolio:admin_entry_create' %}"
+       class="inline-block font-sous-titre text-xs tracking-[2px] uppercase px-6 py-3 border border-or text-or hover:bg-or hover:text-noir-profond transition-all duration-200">
+        Créer la première entrée
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}

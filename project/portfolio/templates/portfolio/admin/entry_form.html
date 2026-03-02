@@ -1,0 +1,162 @@
+{% extends 'accounts/admin/admin_base.html' %}
+
+{% block admin_title %}{{ action }} une entrée{% endblock %}
+{% block page_title %}{{ action }} une entrée{% endblock %}
+
+{% block admin_head %}
+{{ form.media }}
+<link rel="stylesheet" href="/static/css/plp_content.css">
+{% endblock %}
+
+{% block admin_content %}
+
+<form method="POST" enctype="multipart/form-data" class="flex flex-col gap-6 max-w-[900px]">
+{% csrf_token %}
+
+<!-- Messages erreurs globaux -->
+{% if form.non_field_errors %}
+<div class="px-4 py-3 border-l-4 border-red-500 bg-red-500/10 font-texte text-sm text-red-400">
+    {{ form.non_field_errors }}
+</div>
+{% endif %}
+
+<!-- ── BLOC 1 : Informations principales ── -->
+<div class="bg-noir-profond border border-gris-fonce p-6">
+    <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-5">Informations principales</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- Titre -->
+        <div class="md:col-span-2">
+            <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">Titre</label>
+            {{ form.title }}
+            {% if form.title.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.title.errors.0 }}</p>{% endif %}
+        </div>
+
+        <!-- Slug -->
+        <div class="md:col-span-2">
+            <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">
+                Slug <span class="text-blanc-casse/30 normal-case tracking-normal font-texte text-[11px]">(auto-généré si vide)</span>
+            </label>
+            {{ form.slug }}
+            {% if form.slug.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.slug.errors.0 }}</p>{% endif %}
+        </div>
+
+        <!-- Catégorie -->
+        <div>
+            <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">Catégorie</label>
+            {{ form.category }}
+            {% if form.category.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.category.errors.0 }}</p>{% endif %}
+        </div>
+
+        <!-- Publié -->
+        <div class="flex items-center gap-3 pt-7">
+            {{ form.is_published }}
+            <label for="{{ form.is_published.id_for_label }}"
+                   class="font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 cursor-pointer">
+                Publié (visible sur le site)
+            </label>
+        </div>
+
+    </div>
+</div>
+
+<!-- ── BLOC 2 : Médias ── -->
+<div class="bg-noir-profond border border-gris-fonce p-6">
+    <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-5">Médias</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- Miniature -->
+        <div>
+            <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">Miniature</label>
+            {% if object.thumbnail %}
+            <img src="{{ object.thumbnail.url }}" alt="" class="w-full h-32 object-cover grayscale mb-3">
+            {% endif %}
+            {{ form.thumbnail }}
+            {% if form.thumbnail.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.thumbnail.errors.0 }}</p>{% endif %}
+        </div>
+
+        <!-- Description courte -->
+        <div>
+            <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">Description courte</label>
+            {{ form.short_description }}
+            {% if form.short_description.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.short_description.errors.0 }}</p>{% endif %}
+        </div>
+
+    </div>
+</div>
+
+<!-- ── BLOC 3 : Contenu CKEditor ── -->
+<div class="bg-noir-profond border border-gris-fonce p-6">
+    <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-5">Contenu de la page</p>
+    {{ form.content }}
+    {% if form.content.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.content.errors.0 }}</p>{% endif %}
+</div>
+
+<!-- ── BLOC 4 : Vidéos (formset) ── -->
+<div class="bg-noir-profond border border-gris-fonce p-6">
+    <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or mb-5">Vidéos associées</p>
+
+    {{ formset.management_form }}
+
+    <div id="formset-container" class="flex flex-col gap-4">
+        {% for vform in formset %}
+        <div class="formset-row border border-gris-fonce p-4 relative">
+
+            <!-- Supprimer cette vidéo -->
+            {% if formset.can_delete %}
+            <div class="absolute top-3 right-3 flex items-center gap-2">
+                {{ vform.DELETE }}
+                <label for="{{ vform.DELETE.id_for_label }}"
+                       class="font-sous-titre text-[10px] tracking-[1px] uppercase text-red-500/50 cursor-pointer hover:text-red-400 transition-colors">
+                    Supprimer
+                </label>
+            </div>
+            {% endif %}
+
+            {{ vform.id }}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/40 mb-1.5">Titre</label>
+                    {{ vform.title }}
+                </div>
+                <div>
+                    <label class="block font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/40 mb-1.5">Type</label>
+                    {{ vform.video_type }}
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/40 mb-1.5">URL YouTube</label>
+                    {{ vform.youtube_url }}
+                </div>
+                <div>
+                    <label class="block font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/40 mb-1.5">Fichier vidéo</label>
+                    {{ vform.file }}
+                </div>
+                <div>
+                    <label class="block font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/40 mb-1.5">Ordre</label>
+                    {{ vform.order }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- ── Actions ── -->
+<div class="flex items-center gap-4">
+    <button type="submit"
+            class="px-10 py-4 bg-or text-noir-profond font-sous-titre text-sm tracking-[3px] uppercase transition-all duration-300 hover:bg-or-clair hover:shadow-[0_8px_30px_rgba(212,175,55,0.4)]">
+        {{ action }}
+    </button>
+    <a href="{% url 'portfolio:admin_entry_list' %}"
+       class="px-6 py-4 border border-gris-fonce font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/40 hover:text-blanc-casse hover:border-blanc-casse/30 transition-all duration-200">
+        Annuler
+    </a>
+</div>
+
+</form>
+
+{% endblock %}

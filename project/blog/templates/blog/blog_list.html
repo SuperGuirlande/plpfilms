@@ -1,0 +1,174 @@
+{% extends 'main/components/base.html' %}
+{% load static %}
+
+{% block title %}Blog — Cinéma & Vidéo{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="Découvrez les articles de Pierrick Lafond sur la réalisation, le montage vidéo, la captation de spectacles et le cinéma.">
+<meta property="og:title"       content="Blog | PLP Films">
+<meta property="og:description" content="Articles sur la réalisation, le montage et le cinéma par Pierrick Lafond.">
+<meta property="og:type"        content="website">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ── Hero page ── -->
+<section class="pt-28 md:pt-40 pb-10 md:pb-16 px-5 sm:px-8 md:px-12 lg:px-16 bg-noir-profond">
+    <div class="max-w-[1400px] mx-auto">
+        <p class="font-sous-titre text-xs tracking-[5px] uppercase text-or mb-3 md:mb-4">PLP Films</p>
+        <h1 class="font-titre text-[3rem] sm:text-[4.5rem] md:text-[6rem] leading-none tracking-[4px] md:tracking-[6px] text-white mb-5 md:mb-6">BLOG</h1>
+        <div class="w-16 h-[2px] bg-or"></div>
+    </div>
+</section>
+
+<!-- ── Filtres ── -->
+{% if categories or tags %}
+<section class="px-5 sm:px-8 md:px-12 lg:px-16 py-4 md:py-5 bg-noir-profond border-b border-gris-fonce sticky top-0 z-40 backdrop-blur overflow-x-auto">
+    <div class="max-w-[1400px] mx-auto flex items-center gap-2 md:gap-3 flex-nowrap md:flex-wrap min-w-max md:min-w-0">
+
+        <!-- Recherche -->
+        <form method="GET" class="flex items-center gap-2 mr-2 md:mr-4">
+            <input type="text" name="q" value="{{ search_query }}"
+                   placeholder="Rechercher…"
+                   class="bg-gris-fonce border border-[#3a3a3a] focus:border-or text-blanc-casse placeholder-blanc-casse/30 font-texte text-xs px-3 md:px-4 py-2 outline-none transition-colors duration-200 w-28 md:w-40">
+            <button type="submit" class="font-sous-titre text-[10px] tracking-[1px] uppercase px-3 py-2 bg-or text-noir-profond hover:bg-or-clair transition-all duration-200">Go</button>
+        </form>
+
+        <!-- Catégories -->
+        <a href="{% url 'main:blog_list' %}"
+           class="font-sous-titre text-xs tracking-[2px] uppercase px-4 py-2 transition-all duration-200
+                  {% if not active_category and not active_tag and not search_query %}bg-or text-noir-profond{% else %}border border-gris-fonce text-blanc-casse/50 hover:border-or hover:text-or{% endif %}">
+            Tous
+        </a>
+        {% for cat in categories %}
+        <a href="{% url 'main:blog_list' %}?categorie={{ cat.slug }}"
+           class="font-sous-titre text-xs tracking-[2px] uppercase px-4 py-2 transition-all duration-200
+                  {% if active_category.slug == cat.slug %}bg-or text-noir-profond{% else %}border border-gris-fonce text-blanc-casse/50 hover:border-or hover:text-or{% endif %}">
+            {{ cat.name }}
+        </a>
+        {% endfor %}
+
+        <!-- Tags -->
+        {% for tag in tags %}
+        <a href="{% url 'main:blog_list' %}?tag={{ tag.slug }}"
+           class="font-sous-titre text-[10px] tracking-[1px] uppercase px-3 py-1.5 transition-all duration-200
+                  {% if active_tag.slug == tag.slug %}border border-or text-or{% else %}border border-gris-fonce/50 text-blanc-casse/30 hover:border-or/50 hover:text-blanc-casse/60{% endif %}">
+            # {{ tag.name }}
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="bg-noir-profond min-h-screen">
+    <div class="max-w-[1400px] mx-auto px-5 sm:px-8 md:px-12 lg:px-16 py-10 md:py-16">
+
+        <!-- ── Article featured ── -->
+        {% if featured %}
+        <a href="{% url 'main:blog_detail' featured.slug %}"
+           class="group block mb-16 relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+                <!-- Image -->
+                <div class="relative h-[400px] overflow-hidden">
+                    {% if featured.cover %}
+                    <img src="{{ featured.cover.url }}" alt="{{ featured.title }}"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                    {% else %}
+                    <div class="w-full h-full bg-gris-fonce flex items-center justify-center">
+                        <span class="font-titre text-[4rem] tracking-[6px] text-blanc-casse/10">PLP</span>
+                    </div>
+                    {% endif %}
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent to-noir-profond lg:block hidden"></div>
+                    <span class="absolute top-4 left-4 font-sous-titre text-[10px] tracking-[2px] uppercase px-3 py-1 bg-or text-noir-profond">★ En vedette</span>
+                </div>
+                <!-- Contenu -->
+                <div class="bg-noir-doux border border-gris-fonce group-hover:border-or/30 transition-colors duration-300 p-10 flex flex-col justify-center">
+                    {% if featured.category %}
+                    <span class="font-sous-titre text-xs tracking-[3px] uppercase text-or mb-4">{{ featured.category.name }}</span>
+                    {% endif %}
+                    <h2 class="font-titre text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] leading-none tracking-[3px] text-white mb-4">{{ featured.title }}</h2>
+                    <p class="font-texte text-sm text-blanc-casse/60 leading-relaxed mb-6">{{ featured.excerpt }}</p>
+                    <div class="flex items-center gap-4 text-blanc-casse/30 font-texte text-xs">
+                        <time datetime="{{ featured.published_at|date:'Y-m-d' }}">{{ featured.published_at|date:"d F Y" }}</time>
+                        <span>·</span>
+                        <span>{{ featured.reading_time }} min de lecture</span>
+                    </div>
+                    <div class="mt-6 flex items-center gap-2 font-sous-titre text-xs tracking-[2px] uppercase text-or group-hover:gap-4 transition-all duration-300">
+                        Lire l'article
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+
+        <!-- ── Grille articles ── -->
+        {% if posts %}
+        <p class="font-texte text-xs text-blanc-casse/30 mb-8">
+            {{ posts|length }} article{% if posts|length != 1 %}s{% endif %}
+            {% if search_query %}pour « {{ search_query }} »{% endif %}
+            {% if active_category %}· {{ active_category.name }}{% endif %}
+            {% if active_tag %}· #{{ active_tag.name }}{% endif %}
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+            {% for post in posts %}
+            <article>
+                <a href="{% url 'main:blog_detail' post.slug %}" class="group block bg-noir-doux overflow-hidden">
+
+                    <div class="relative h-[220px] overflow-hidden">
+                        {% if post.cover %}
+                        <img src="{{ post.cover.url }}" alt="{{ post.title }}"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 grayscale group-hover:grayscale-0">
+                        {% else %}
+                        <div class="w-full h-full bg-gris-fonce flex items-center justify-center">
+                            <span class="font-titre text-[2.5rem] tracking-[4px] text-blanc-casse/10">PLP</span>
+                        </div>
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gradient-to-t from-noir-doux/80 to-transparent"></div>
+                        {% if post.category %}
+                        <span class="absolute top-4 left-4 font-sous-titre text-[10px] tracking-[2px] uppercase px-3 py-1 bg-noir-profond/80 text-or border border-or/30">
+                            {{ post.category.name }}
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="p-6 border-t border-gris-fonce group-hover:border-or/30 transition-colors duration-300">
+                        <h2 class="font-sous-titre text-base tracking-[1px] uppercase text-blanc-casse group-hover:text-or transition-colors duration-300 mb-2">
+                            {{ post.title }}
+                        </h2>
+                        <p class="font-texte text-sm text-blanc-casse/50 leading-relaxed line-clamp-2 mb-4">{{ post.excerpt }}</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3 font-texte text-xs text-blanc-casse/25">
+                                <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"d/m/Y" }}</time>
+                                <span>·</span>
+                                <span>{{ post.reading_time }} min</span>
+                            </div>
+                            <span class="font-sous-titre text-xs tracking-[1px] uppercase text-or/0 group-hover:text-or transition-all duration-300 flex items-center gap-1">
+                                Lire
+                                <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {% endfor %}
+        </div>
+
+        {% elif not featured %}
+        <div class="py-32 text-center">
+            <p class="font-titre text-[3.5rem] tracking-[6px] text-blanc-casse/10 mb-4">VIDE</p>
+            <p class="font-texte text-sm text-blanc-casse/30">
+                {% if search_query %}Aucun résultat pour « {{ search_query }} ».{% elif active_category %}Aucun article dans « {{ active_category.name }} ».{% elif active_tag %}Aucun article avec le tag #{{ active_tag.name }}.{% else %}Aucun article publié.{% endif %}
+                {% if search_query or active_category or active_tag %}
+                <a href="{% url 'main:blog_list' %}" class="text-or hover:text-or-clair ml-1">Voir tout →</a>
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

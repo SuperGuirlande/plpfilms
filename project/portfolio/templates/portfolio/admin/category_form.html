@@ -1,0 +1,50 @@
+{% extends 'accounts/admin/admin_base.html' %}
+
+{% block admin_title %}{{ action }} une catégorie{% endblock %}
+{% block page_title %}{{ action }} une catégorie{% endblock %}
+
+{% block admin_content %}
+
+<form method="POST" class="max-w-[480px]">
+{% csrf_token %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="mb-4 px-4 py-3 border-l-4 border-red-500 bg-red-500/10 font-texte text-sm text-red-400">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="bg-noir-profond border border-gris-fonce p-6 flex flex-col gap-5">
+    <p class="font-sous-titre text-[10px] tracking-[3px] uppercase text-or">Catégorie</p>
+
+    <div>
+        <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">Nom</label>
+        {{ form.name }}
+        {% if form.name.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.name.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div>
+        <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/60 mb-2">
+            Slug <span class="text-blanc-casse/30 normal-case tracking-normal font-texte text-[11px]">(auto-généré si vide)</span>
+        </label>
+        {{ form.slug }}
+        {% if form.slug.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ form.slug.errors.0 }}</p>{% endif %}
+    </div>
+</div>
+
+<div class="flex items-center gap-4 mt-5">
+    <button type="submit"
+            class="px-10 py-4 bg-or text-noir-profond font-sous-titre text-sm tracking-[3px] uppercase transition-all duration-300 hover:bg-or-clair hover:shadow-[0_8px_30px_rgba(212,175,55,0.4)]">
+        {{ action }}
+    </button>
+    <a href="{% url 'portfolio:admin_category_list' %}"
+       class="px-6 py-4 border border-gris-fonce font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/40 hover:text-blanc-casse hover:border-blanc-casse/30 transition-all duration-200">
+        Annuler
+    </a>
+</div>
+
+</form>
+
+{% endblock %}

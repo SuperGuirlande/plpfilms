@@ -1,0 +1,46 @@
+{% extends 'accounts/admin/admin_base.html' %}
+
+{% block admin_title %}Supprimer{% endblock %}
+{% block page_title %}Confirmer la suppression{% endblock %}
+
+{% block admin_content %}
+
+<div class="max-w-[480px]">
+    <div class="bg-noir-profond border border-red-500/30 p-8">
+
+        <div class="flex items-start gap-4 mb-6">
+            <div class="w-10 h-10 bg-red-500/10 border border-red-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <div>
+                <h2 class="font-titre text-xl tracking-[2px] text-white mb-2">ATTENTION</h2>
+                <p class="font-texte text-sm text-blanc-casse/60 leading-relaxed">
+                    Vous êtes sur le point de supprimer définitivement {{ object_type }} :
+                </p>
+                <p class="font-sous-titre text-sm tracking-[1px] uppercase text-blanc-casse mt-2">
+                    « {{ object }} »
+                </p>
+                <p class="font-texte text-xs text-red-400/70 mt-3">
+                    Cette action est irréversible.
+                </p>
+            </div>
+        </div>
+
+        <form method="POST" class="flex items-center gap-4">
+            {% csrf_token %}
+            <button type="submit"
+                    class="px-8 py-3 bg-red-600 text-white font-sous-titre text-xs tracking-[2px] uppercase hover:bg-red-500 transition-all duration-200">
+                Supprimer définitivement
+            </button>
+            <a href="{% url cancel_url %}"
+               class="px-6 py-3 border border-gris-fonce font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/40 hover:text-blanc-casse hover:border-blanc-casse/30 transition-all duration-200">
+                Annuler
+            </a>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

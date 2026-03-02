@@ -1,0 +1,336 @@
+{% extends 'main/components/base.html' %}
+{% load static %}
+
+{% block title %}Pierrick Lafond{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="accueil" class="h-screen relative flex items-center justify-center overflow-hidden">
+    <img src="{% static 'images/global/pagecaptation_salles_spectacles (1).jpg' %}"
+         alt="" class="absolute inset-0 w-full h-full object-cover object-center">
+    <div class="absolute inset-0 bg-noir-profond/60"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-noir-profond via-transparent to-noir-profond/40"></div>
+
+    <div class="relative z-10 text-center px-5 sm:px-8">
+        <h1 class="font-titre text-[3rem] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] tracking-[4px] md:tracking-[8px] mb-4 text-white [text-shadow:0_4px_20px_rgba(0,0,0,0.8)]">
+            PIERRICK <span class="text-or">LAFOND</span>
+        </h1>
+        <p class="font-sous-titre text-sm sm:text-lg md:text-2xl tracking-[3px] md:tracking-[4px] uppercase text-blanc-casse font-light">
+            Réalisateur&nbsp;•&nbsp;Vidéaste&nbsp;•&nbsp;Monteur
+        </p>
+        <div class="mt-8 md:mt-12">
+            <a href="#portfolio"
+               class="inline-block px-8 md:px-12 py-3 md:py-4 border-2 border-or text-or font-sous-titre tracking-[2px] uppercase transition-all duration-300 hover:bg-or hover:text-noir-profond hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)]">
+                Découvrir
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PRÉSENTATION
+════════════════════════════════════════ -->
+<section id="about" class="py-16 md:py-24 lg:py-32 px-5 sm:px-8 md:px-12 lg:px-16 bg-noir-profond overflow-hidden">
+    <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+
+        <!-- Texte -->
+        <div>
+            <p class="font-sous-titre text-or text-sm tracking-[5px] uppercase mb-5">À propos</p>
+            <h2 class="font-titre text-[3rem] sm:text-[4rem] lg:text-[5.5rem] leading-none tracking-[4px] text-white mb-5">
+                PIERRICK<br><span class="text-or">LAFOND</span>
+            </h2>
+            <p class="font-sous-titre text-sm md:text-lg tracking-[3px] uppercase text-blanc-casse/60 mb-8">
+                Réalisateur&nbsp;·&nbsp;Auteur&nbsp;·&nbsp;Monteur
+            </p>
+            <div class="w-16 h-[2px] bg-or mb-8"></div>
+            <p class="font-texte text-base leading-[1.9] text-blanc-casse/80 mb-5">
+                Passionné par l'image et la narration visuelle, Pierrick Lafond met son expertise
+                au service de projets audiovisuels exigeants. De la captation de spectacles aux
+                courts-métrages, des clips musicaux aux documentaires de festival, chaque projet
+                est abordé avec rigueur et sensibilité artistique.
+            </p>
+            <p class="font-texte text-base leading-[1.9] text-blanc-casse/80 mb-10">
+                Il intervient aussi bien en solo qu'en équipe
+                pour livrer des contenus qui marquent les esprits — de la prise de vue
+                jusqu'au montage final.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-10">
+                <span class="font-sous-titre text-xs tracking-[2px] uppercase px-4 py-2 border border-or text-or">Vidéos</span>
+                <span class="font-sous-titre text-xs tracking-[2px] uppercase px-4 py-2 border border-or text-or">Captations</span>
+                <span class="font-sous-titre text-xs tracking-[2px] uppercase px-4 py-2 border border-or text-or">Montages</span>
+                <span class="font-sous-titre text-xs tracking-[2px] uppercase px-4 py-2 border border-or text-or">Photos</span>
+            </div>
+            <a href="#portfolio"
+               class="inline-block px-10 py-4 border-2 border-or text-or font-sous-titre tracking-[2px] uppercase transition-all duration-300 hover:bg-or hover:text-noir-profond hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)]">
+                Voir le portfolio
+            </a>
+        </div>
+
+        <!-- Photo -->
+        <div class="relative mt-8 lg:mt-0">
+            <div class="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 w-full h-full border border-or/30 pointer-events-none"></div>
+            <div class="relative overflow-hidden">
+                <img src="{% static 'images/global/PierrickLafond_171024_001 (1).jpg' %}"
+                     alt="Pierrick Lafond — Réalisateur"
+                     class="w-full h-[380px] sm:h-[480px] lg:h-[620px] object-cover object-top grayscale">
+                <div class="absolute inset-0 bg-gradient-to-t from-noir-profond/70 via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 border-t border-or/30">
+                    <p class="font-titre text-[1.5rem] md:text-[2rem] tracking-[4px] text-white leading-none">PIERRICK LAFOND</p>
+                    <p class="font-sous-titre text-xs tracking-[3px] uppercase text-or mt-1">Réalisateur · Auteur · Monteur</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PORTFOLIO
+════════════════════════════════════════ -->
+<section id="portfolio" class="py-16 md:py-24 lg:py-32 px-5 sm:px-8 md:px-12 lg:px-16 bg-noir-doux">
+    <div class="max-w-[1400px] mx-auto">
+
+        <div class="flex items-end justify-between mb-4">
+            <h2 class="font-titre text-[2rem] sm:text-[3.5rem] md:text-[5rem] tracking-[4px] md:tracking-[6px] text-white leading-none">PORTFOLIO</h2>
+            {% if has_portfolio %}
+            <a href="{% url 'main:portfolio_list' %}"
+               class="hidden sm:flex items-center gap-2 font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/40 hover:text-or transition-colors duration-300 mb-2">
+                Voir tout
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+            {% endif %}
+        </div>
+        <p class="font-sous-titre text-base md:text-[1.8rem] font-semibold tracking-[2px] uppercase text-or">Réalisations</p>
+
+        {% if has_portfolio %}
+        <!-- Mosaïque dynamique — responsive -->
+        <div class="grid grid-cols-2 md:grid-cols-6 auto-rows-[150px] md:auto-rows-[200px] gap-3 md:gap-6 mt-10 md:mt-16">
+            {% for entry in portfolio_entries %}
+
+            {% if forloop.counter0 == 0 %}
+                <a href="{% url 'main:portfolio_detail' entry.slug %}"
+                   class="group relative bg-gris-fonce overflow-hidden col-span-2 row-span-2 md:col-span-3 md:row-span-2 transition-transform duration-300 hover:scale-[1.02] hover:z-10">
+            {% elif forloop.counter0 == 1 %}
+                <a href="{% url 'main:portfolio_detail' entry.slug %}"
+                   class="group relative bg-gris-fonce overflow-hidden col-span-2 row-span-1 md:col-span-2 md:row-span-2 transition-transform duration-300 hover:scale-[1.02] hover:z-10">
+            {% elif forloop.counter0 == 2 %}
+                <a href="{% url 'main:portfolio_detail' entry.slug %}"
+                   class="group relative bg-gris-fonce overflow-hidden col-span-1 row-span-1 md:row-span-2 transition-transform duration-300 hover:scale-[1.02] hover:z-10">
+            {% elif forloop.counter0 == 3 %}
+                <a href="{% url 'main:portfolio_detail' entry.slug %}"
+                   class="group relative bg-gris-fonce overflow-hidden col-span-1 row-span-1 transition-transform duration-300 hover:scale-[1.02] hover:z-10">
+            {% elif forloop.counter0 == 4 %}
+                <a href="{% url 'main:portfolio_detail' entry.slug %}"
+                   class="group relative bg-gris-fonce overflow-hidden col-span-1 row-span-1 md:row-span-2 transition-transform duration-300 hover:scale-[1.02] hover:z-10">
+            {% elif forloop.counter0 == 5 %}
+                <a href="{% url 'main:portfolio_detail' entry.slug %}"
+                   class="group relative bg-gris-fonce overflow-hidden col-span-1 row-span-1 transition-transform duration-300 hover:scale-[1.02] hover:z-10">
+            {% else %}
+                <a href="{% url 'main:portfolio_detail' entry.slug %}"
+                   class="group relative bg-gris-fonce overflow-hidden col-span-2 row-span-2 md:col-span-3 md:row-span-2 transition-transform duration-300 hover:scale-[1.02] hover:z-10">
+            {% endif %}
+
+                {% if entry.thumbnail %}
+                <img src="{{ entry.thumbnail.url }}" alt="{{ entry.title }}"
+                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                {% endif %}
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-noir-profond/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute bottom-3 left-3 z-20 opacity-0 translate-y-[10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                    {% if entry.category %}
+                    <span class="block font-sous-titre text-[9px] tracking-[2px] uppercase text-or mb-0.5">{{ entry.category.name }}</span>
+                    {% endif %}
+                    <span class="font-sous-titre text-xs md:text-base tracking-[1px] uppercase text-white">{{ entry.title }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="mt-8 md:mt-12 text-center">
+            <a href="{% url 'main:portfolio_list' %}"
+               class="inline-block px-8 md:px-12 py-4 border-2 border-or text-or font-sous-titre tracking-[2px] uppercase transition-all duration-300 hover:bg-or hover:text-noir-profond hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)]">
+                Voir tout le portfolio
+            </a>
+        </div>
+
+        {% else %}
+        <div class="mt-12 border border-gris-fonce py-16 md:py-24 text-center">
+            <p class="font-titre text-[2.5rem] tracking-[6px] text-blanc-casse/10 mb-4">BIENTÔT</p>
+            <p class="font-sous-titre text-sm tracking-[3px] uppercase text-blanc-casse/30">Les projets arrivent prochainement</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     DERNIÈRES ACTUALITÉS
+════════════════════════════════════════ -->
+<section id="blog" class="py-16 md:py-24 lg:py-32 px-5 sm:px-8 md:px-12 lg:px-16 bg-noir-profond">
+    <div class="max-w-[1400px] mx-auto">
+
+        <div class="flex items-end justify-between mb-4">
+            <h2 class="font-titre text-[2rem] sm:text-[3.5rem] md:text-[5rem] tracking-[4px] md:tracking-[6px] text-white leading-none">ACTUALITÉS</h2>
+            {% if has_blog %}
+            <a href="{% url 'main:blog_list' %}"
+               class="hidden sm:flex items-center gap-2 font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/40 hover:text-or transition-colors duration-300 mb-2">
+                Tous les articles
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+            {% endif %}
+        </div>
+        <p class="font-sous-titre text-base md:text-[1.8rem] font-semibold tracking-[2px] uppercase text-or">Dernières publications</p>
+
+        {% if has_blog %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6 mt-10 md:mt-16">
+            {% for post in blog_posts %}
+            <a href="{% url 'main:blog_detail' post.slug %}"
+               class="group block bg-noir-doux border border-gris-fonce hover:border-or/30 overflow-hidden transition-colors duration-300">
+                <div class="relative h-[200px] md:h-[220px] overflow-hidden">
+                    {% if post.cover %}
+                    <img src="{{ post.cover.url }}" alt="{{ post.title }}"
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105">
+                    {% else %}
+                    <div class="w-full h-full bg-gris-fonce flex items-center justify-center">
+                        <span class="font-titre text-[2.5rem] tracking-[4px] text-blanc-casse/10">PLP</span>
+                    </div>
+                    {% endif %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-noir-doux/80 to-transparent"></div>
+                    {% if post.category %}
+                    <span class="absolute top-4 left-4 font-sous-titre text-[10px] tracking-[2px] uppercase px-3 py-1 bg-noir-profond/80 text-or border border-or/30">{{ post.category.name }}</span>
+                    {% endif %}
+                    {% if post.is_featured %}
+                    <span class="absolute top-4 right-4 font-sous-titre text-[10px] text-or">★</span>
+                    {% endif %}
+                </div>
+                <div class="p-5 md:p-6">
+                    <h3 class="font-sous-titre text-sm md:text-base tracking-[1px] uppercase text-blanc-casse group-hover:text-or transition-colors duration-300 mb-2">{{ post.title }}</h3>
+                    <p class="font-texte text-sm text-blanc-casse/50 leading-relaxed line-clamp-2 mb-4">{{ post.excerpt }}</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2 font-texte text-xs text-blanc-casse/25">
+                            <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"d/m/Y" }}</time>
+                            <span>·</span>
+                            <span>{{ post.reading_time }} min</span>
+                        </div>
+                        <span class="font-sous-titre text-xs tracking-[1px] uppercase text-or opacity-0 group-hover:opacity-100 transition-opacity duration-300">Lire →</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="mt-8 md:mt-12 text-center">
+            <a href="{% url 'main:blog_list' %}"
+               class="inline-block px-8 md:px-12 py-4 border-2 border-or text-or font-sous-titre tracking-[2px] uppercase transition-all duration-300 hover:bg-or hover:text-noir-profond hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)]">
+                Tous les articles
+            </a>
+        </div>
+
+        {% else %}
+        <div class="mt-12 border border-gris-fonce py-16 text-center">
+            <p class="font-titre text-[2.5rem] tracking-[6px] text-blanc-casse/10 mb-4">BIENTÔT</p>
+            <p class="font-sous-titre text-sm tracking-[3px] uppercase text-blanc-casse/30">Les articles arrivent prochainement</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONTACT
+════════════════════════════════════════ -->
+<section id="contact" class="py-16 md:py-24 lg:py-32 px-5 sm:px-8 md:px-12 lg:px-16 bg-noir-doux">
+    <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+        <!-- Infos -->
+        <div>
+            <p class="font-sous-titre text-xs tracking-[5px] uppercase text-or mb-4">Travaillons ensemble</p>
+            <h2 class="font-titre text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] leading-none tracking-[4px] text-white mb-6">CONTACT</h2>
+            <div class="w-16 h-[2px] bg-or mb-8"></div>
+            <p class="font-texte text-base leading-[1.9] text-blanc-casse/70 mb-8">
+                Vous avez un projet de film, une captation de spectacle, un clip musical ou une interview à réaliser ?
+                N'hésitez pas à me contacter pour en discuter.
+            </p>
+            <div class="flex flex-col gap-4">
+                <a href="mailto:pierrick.lafond@yahoo.fr" class="flex items-center gap-4 group">
+                    <div class="w-10 h-10 border border-gris-fonce group-hover:border-or flex items-center justify-center flex-shrink-0 transition-colors duration-200">
+                        <svg class="w-4 h-4 text-blanc-casse/40 group-hover:text-or transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 mb-0.5">Email</p>
+                        <p class="font-texte text-sm text-blanc-casse/70 group-hover:text-or transition-colors duration-200">pierrick.lafond@yahoo.fr</p>
+                    </div>
+                </a>
+                <a href="tel:+33679303524" class="flex items-center gap-4 group">
+                    <div class="w-10 h-10 border border-gris-fonce group-hover:border-or flex items-center justify-center flex-shrink-0 transition-colors duration-200">
+                        <svg class="w-4 h-4 text-blanc-casse/40 group-hover:text-or transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-sous-titre text-[10px] tracking-[2px] uppercase text-blanc-casse/30 mb-0.5">Téléphone</p>
+                        <p class="font-texte text-sm text-blanc-casse/70 group-hover:text-or transition-colors duration-200">06 79 30 35 24</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Formulaire -->
+        <div>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="mb-6 px-5 py-4 border-l-4 border-green-500 bg-green-500/10">
+                <p class="font-texte text-sm text-green-400">{{ message }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <form method="POST" action="{% url 'main:home' %}#contact" class="flex flex-col gap-5">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/50 mb-2">Prénom</label>
+                        {{ contact_form.first_name }}
+                        {% if contact_form.first_name.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ contact_form.first_name.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div>
+                        <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/50 mb-2">Nom</label>
+                        {{ contact_form.last_name }}
+                        {% if contact_form.last_name.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ contact_form.last_name.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/50 mb-2">Email</label>
+                    {{ contact_form.email }}
+                    {% if contact_form.email.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ contact_form.email.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/50 mb-2">
+                        Téléphone <span class="text-blanc-casse/25 normal-case tracking-normal font-texte text-[11px]">— optionnel</span>
+                    </label>
+                    {{ contact_form.phone }}
+                </div>
+                <div>
+                    <label class="block font-sous-titre text-xs tracking-[2px] uppercase text-blanc-casse/50 mb-2">Message</label>
+                    {{ contact_form.message }}
+                    {% if contact_form.message.errors %}<p class="mt-1 font-texte text-xs text-red-400">{{ contact_form.message.errors.0 }}</p>{% endif %}
+                </div>
+                <button type="submit"
+                        class="w-full py-4 bg-or text-noir-profond font-sous-titre text-sm tracking-[3px] uppercase transition-all duration-300 hover:bg-or-clair hover:shadow-[0_8px_30px_rgba(212,175,55,0.4)] mt-2">
+                    Envoyer le message
+                </button>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
