@@ -12,4 +12,4 @@ urlpatterns = [
     path('mon-espace/', include('accounts.urls')),
     path('mon-espace/portfolio/', include('portfolio.urls')),
     path('mon-espace/blog/',      include('blog.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
