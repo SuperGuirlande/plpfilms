@@ -9,8 +9,10 @@
      HERO
 ════════════════════════════════════════ -->
 <section id="accueil" class="h-screen relative flex items-center justify-center overflow-hidden">
-    <img src="{% static 'images/global/pagecaptation_salles_spectacles (1).jpg' %}"
-         alt="" class="absolute inset-0 w-full h-full object-cover object-center">
+    <video autoplay muted loop playsinline
+           class="absolute inset-0 w-full h-full object-cover object-center">
+        <source src="{% static 'hero_teaser.mp4' %}" type="video/mp4">
+    </video>
     <div class="absolute inset-0 bg-noir-profond/60"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-noir-profond via-transparent to-noir-profond/40"></div>
 
@@ -22,7 +24,7 @@
             Réalisateur&nbsp;•&nbsp;Vidéaste&nbsp;•&nbsp;Monteur
         </p>
         <div class="mt-8 md:mt-12">
-            <a href="#portfolio"
+            <a href="#about"
                class="inline-block px-8 md:px-12 py-3 md:py-4 border-2 border-or text-or font-sous-titre tracking-[2px] uppercase transition-all duration-300 hover:bg-or hover:text-noir-profond hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(212,175,55,0.3)]">
                 Découvrir
             </a>
@@ -48,14 +50,19 @@
             <div class="w-16 h-[2px] bg-or mb-8"></div>
             <p class="font-texte text-base leading-[1.9] text-blanc-casse/80 mb-5">
                 Passionné par l'image et la narration visuelle, Pierrick Lafond met son expertise
-                au service de projets audiovisuels exigeants. De la captation de spectacles aux
-                courts-métrages, des clips musicaux aux documentaires de festival, chaque projet
-                est abordé avec rigueur et sensibilité artistique.
+                au service de projets audiovisuels exigeants. De la captation aux courts-métrages,
+                des films institutionnels aux clips musicaux, chaque projet est abordé humainement
+                avec rigueur et sensibilité artistique.
+            </p>
+            <p class="font-texte text-base leading-[1.9] text-blanc-casse/80 mb-5">
+                Il intervient aussi bien en solo qu'en équipe pour livrer des contenus qui marquent
+                les esprits — de la prise de vue jusqu'au montage final.
             </p>
             <p class="font-texte text-base leading-[1.9] text-blanc-casse/80 mb-10">
-                Il intervient aussi bien en solo qu'en équipe
-                pour livrer des contenus qui marquent les esprits — de la prise de vue
-                jusqu'au montage final.
+                En 2024, son film <span class="text-or italic">Treize l'enfant de la chance</span>
+                reçoit le prix du Meilleur Film Court International à Jaipur en Inde. Depuis,
+                les sélections et les récompenses se sont multipliées pour ce film comme pour
+                d'autres réalisations.
             </p>
             <div class="flex flex-wrap gap-3 mb-10">
                 <span class="font-sous-titre text-xs tracking-[2px] uppercase px-4 py-2 border border-or text-or">Vidéos</span>

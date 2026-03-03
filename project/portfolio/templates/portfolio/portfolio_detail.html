@@ -216,7 +216,8 @@ document.querySelectorAll('.yt-facade').forEach(facade => {
         iframe.src             = embedUrl;
         iframe.title           = facade.querySelector('img')?.alt || 'Vidéo';
         iframe.frameBorder     = '0';
-        iframe.allow           = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allow           = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy  = 'strict-origin-when-cross-origin';
         iframe.allowFullscreen = true;
         iframe.className       = 'absolute inset-0 w-full h-full';
 
